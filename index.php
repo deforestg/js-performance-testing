@@ -2,6 +2,10 @@
 <head>
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <script type="application/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bower_components/highlightjs/styles/default.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/highlightjs/styles/monokai.css">
+    <script type="application/javascript" src="bower_components/highlightjs/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
 <body>
@@ -27,7 +31,7 @@
         </div>
         <div class="col-md-8">
             <h4>test code</h4>
-            <div class="highlight"><pre><code class="language-js" data-lang="js">
+            <div class="highlight"><pre><code class="javascript hljs">
 /* "object" */
 testEachSelf: function(list) {
     var self = this;
@@ -77,7 +81,7 @@ TestClass.prototype.testEachProxy = function(list) {
         </div>
         <div class="col-md-8">
             <h4>test code</h4>
-            <div class="highlight"><pre><code class="language-js" data-lang="js">
+            <div class="highlight"><pre><code class="javascript hljs">
 /* "object" */
 testSelfBinds: function(list) {
     var self = this;
