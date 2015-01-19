@@ -21,3 +21,25 @@ TestClass.prototype.testEachProxy = function(list) {
         $(value).addClass(this.testVar).removeClass(this.testVar);
     }, this));
 };
+
+TestClass.prototype.testSelfBinds = function(list) {
+    var self = this;
+    list.on('click', function(e) {
+        $(e.target).addClass(self.testVar).removeClass(self.testVar);
+    });
+    list.trigger('click');
+};
+
+TestClass.prototype.testBindBinds = function(list) {
+    list.on('click', (function(e) {
+        $(e.target).addClass(this.testVar).removeClass(this.testVar);
+    }).bind(this));
+    list.trigger('click');
+};
+
+TestClass.prototype.testProxyBinds = function(list) {
+    list.on('click', $.proxy(function(e) {
+        $(e.target).addClass(this.testVar).removeClass(this.testVar);
+    }, this));
+    list.trigger('click');
+};

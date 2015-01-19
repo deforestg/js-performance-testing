@@ -6,38 +6,66 @@ function generateList(length) {
     return list.find('li');
 }
 
-var start, end, list, testClass = new TestClass(),
-    results = $('#results').find('ul');
+var testClass = new TestClass(),
+    results = $('#results').find('.test-result'),
+    eachResults = results.filter('.each-test'),
+    bindResults = results.filter('.bind-test'),
+    eachDataLengthInput = $('#test-each-data-length'),
+    bindDataLengthInput = $('#test-bind-data-length');
 
-function benchmark(func, desc) {
-    start = (new Date()).getTime();
+function benchmark(func, desc, appendTo) {
+    var start = (new Date()).getTime();
     func();
-    end = (new Date()).getTime();
-    results.append($('<li>').text(desc + ':  ' + (end - start)));
+    var end = (new Date()).getTime();
+    appendTo.append($('<li class="list-group-item">').text(desc + ':  ' + (end - start)));
 }
 
-var dataLengthInput = $('#test-each-data-length');
 $('#test-each').on('click', function() {
-    results.empty();
-    list = generateList(parseInt(dataLengthInput.val(), 10));
+    eachResults.empty();
+    var list = generateList(parseInt(eachDataLengthInput.val(), 10));
 
     benchmark(function() {
         testObject.testEachSelf(list);
-    }, 'Object self each');
+    }, 'Object self each', eachResults);
     benchmark(function() {
         testObject.testEachBind(list);
-    }, 'Object bind each');
+    }, 'Object bind each', eachResults);
     benchmark(function() {
         testObject.testEachProxy(list);
-    }, 'Object proxy each');
+    }, 'Object proxy each', eachResults);
 
     benchmark(function() {
         testClass.testEachSelf(list);
-    }, 'Class self each');
+    }, 'Class self each', eachResults);
     benchmark(function() {
         testClass.testEachBind(list);
-    }, 'Class bind each');
+    }, 'Class bind each', eachResults);
     benchmark(function() {
         testClass.testEachProxy(list);
-    }, 'Class proxy each');
+    }, 'Class proxy each', eachResults);
+});
+
+$('#test-bind').on('click', function() {
+    bindResults.empty();
+    var list = generateList(parseInt(bindDataLengthInput.val(), 10));
+
+    benchmark(function() {
+        testObject.testSelfBinds(list);
+    }, 'Object self binds', bindResults);
+    benchmark(function() {
+        testObject.testBindBinds(list);
+    }, 'Object bind binds', bindResults);
+    benchmark(function() {
+        testObject.testProxyBinds(list);
+    }, 'Object proxy binds', bindResults);
+
+    benchmark(function() {
+        testClass.testSelfBinds(list);
+    }, 'Class self binds', bindResults);
+    benchmark(function() {
+        testClass.testBindBinds(list);
+    }, 'Class bind binds', bindResults);
+    benchmark(function() {
+        testClass.testProxyBinds(list);
+    }, 'Class proxy binds', bindResults);
 });
