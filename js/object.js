@@ -28,16 +28,14 @@ var testObject = {
         list.trigger('click');
     },
     testBindBinds: function(list) {
-        var self = this;
         list.on('click', (function(e) {
-            $(e.target).addClass(self.testVar).removeClass(self.testVar);
+            $(e.target).addClass(this.testVar).removeClass(this.testVar);
         }).bind(this));
         list.trigger('click');
     },
     testProxyBinds: function(list) {
-        var self = this;
         list.on('click', $.proxy(function(e) {
-            $(e.target).addClass(self.testVar).removeClass(self.testVar);
+            $(e.target).addClass(this.testVar).removeClass(this.testVar);
         }, this));
         list.trigger('click');
     }
